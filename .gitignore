@@ -1,0 +1,20 @@
+# Dependências instaladas pelo npm
+node_modules/
+
+# Arquivos gerados pela compilação do TypeScript
+dist/
+*.tsbuildinfo
+
+# Logs de execução
+*.log
+npm-debug.log*
+
+# Configurações locais de ambiente
+.env
+.env.*
+!.env.example
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+Desktop.ini
