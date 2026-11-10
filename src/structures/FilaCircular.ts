@@ -39,6 +39,7 @@ export class FilaCircular<T> {
     const elemento = this.elementos[this.inicio];
 
     this.elementos[this.inicio] = undefined;
+    //o %this.capacidade faz que ao atingir esse numero o resultado volte a 0 isso é uma caracteristica da fila circular
     this.inicio = (this.inicio + 1) % this.capacidade;
     this.quantidade--;
 
