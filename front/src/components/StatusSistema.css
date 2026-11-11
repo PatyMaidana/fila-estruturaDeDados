@@ -1,0 +1,146 @@
+.status-cabecalho {
+  margin-bottom: 24px;
+}
+
+.status-codigo {
+  display: block;
+  margin-bottom: 6px;
+
+  color: #7ea66f;
+
+  font-family: "Courier New", monospace;
+  font-size: 0.72rem;
+
+  letter-spacing: 0.12em;
+}
+
+.status-cabecalho h2 {
+  margin-bottom: 0;
+}
+
+.status-indicador {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px;
+
+  border: 1px solid #365c43;
+  border-radius: 6px;
+
+  background: rgba(8, 17, 13, 0.45);
+
+  color: #a8c59e;
+
+  font-family: "Courier New", monospace;
+  font-size: 0.78rem;
+
+  letter-spacing: 0.06em;
+}
+
+.status-led {
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: #9bd77e;
+
+  box-shadow:
+    0 0 6px rgba(155, 215, 126, 0.8),
+    0 0 14px rgba(155, 215, 126, 0.35);
+}
+
+.status-led-alerta {
+  background: #e2a24f;
+
+  box-shadow:
+    0 0 6px rgba(226, 162, 79, 0.8),
+    0 0 14px rgba(226, 162, 79, 0.4);
+}
+
+.status-capacidade {
+  margin-top: 24px;
+}
+
+.status-numeros {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 10px;
+}
+
+.status-numeros span {
+  color: #829486;
+  font-size: 0.8rem;
+}
+
+.status-numeros strong {
+  color: #d6ffb9;
+
+  font-family: "Courier New", monospace;
+  font-size: 1.4rem;
+}
+
+.status-barra {
+  width: 100%;
+  height: 10px;
+
+  overflow: hidden;
+
+  border: 1px solid #42684d;
+  border-radius: 2px;
+
+  background: #09100c;
+}
+
+.status-progresso {
+  height: 100%;
+
+  background: #8bc86e;
+
+  transition: width 0.3s ease;
+}
+
+.status-progresso-alerta {
+  background: #d99648;
+}
+
+.status-percentual {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #718176;
+
+  font-family: "Courier New", monospace;
+  font-size: 0.72rem;
+
+  text-align: right;
+}
+
+.status-alerta {
+  margin-top: 20px;
+  padding: 14px;
+
+  border: 1px solid #a36b39;
+  border-radius: 6px;
+
+  background: rgba(113, 59, 25, 0.3);
+}
+
+.status-alerta strong {
+  color: #ffc278;
+
+  font-family: "Courier New", monospace;
+}
+
+.status-alerta p {
+  margin: 6px 0 0;
+
+  color: #d5ad82;
+  font-size: 0.82rem;
+}

@@ -1,0 +1,108 @@
+.atendimento-cabecalho {
+  margin-bottom: 20px;
+}
+
+.atendimento-codigo {
+  display: block;
+  margin-bottom: 6px;
+
+  color: #7ea66f;
+
+  font-family: "Courier New", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+.senha-atendimento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 24px;
+
+  border: 1px solid #7ba967;
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(47, 76, 50, 0.5),
+      rgba(10, 22, 14, 0.8)
+    );
+}
+
+.senha-atendimento-label {
+  color: #8ba28d;
+
+  font-family: "Courier New", monospace;
+  font-size: 0.72rem;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.senha-atendimento-codigo {
+  margin: 10px 0;
+
+  color: #d6ffb9;
+
+  font-family: "Courier New", monospace;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+
+  letter-spacing: 0.1em;
+
+  text-shadow:
+    0 0 10px rgba(155, 215, 126, 0.25);
+}
+
+.senha-atendimento-detalhe {
+  color: #95a998;
+
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.atendimento-vazio {
+  padding: 24px;
+
+  border: 1px dashed #365c43;
+  border-radius: 8px;
+
+  color: #687c6c;
+
+  font-family: "Courier New", monospace;
+  text-align: center;
+}
+
+.botao-atender {
+  width: 100%;
+
+  margin-top: 16px;
+  padding: 14px 18px;
+
+  border: 1px solid #9bd77e;
+  border-radius: 6px;
+
+  background: transparent;
+  color: #b9e899;
+
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.botao-atender:hover {
+  background: #9bd77e;
+  color: #0a120c;
+
+  transform: translateY(-1px);
+}

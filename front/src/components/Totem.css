@@ -1,0 +1,187 @@
+.painel-cabecalho {
+  margin-bottom: 22px;
+}
+
+.painel-codigo {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #7ea66f;
+
+  font-family: "Courier New", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+.painel-cabecalho h2 {
+  margin-bottom: 6px;
+}
+
+.painel-cabecalho p {
+  margin: 0;
+
+  color: #9eb0a2;
+  font-size: 0.9rem;
+}
+
+.grupo-opcoes {
+  margin-top: 20px;
+}
+
+.grupo-label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #93b887;
+
+  font-family: "Courier New", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.opcoes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.opcoes-servico {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.opcao {
+  padding: 12px 14px;
+
+  border: 1px solid #42684d;
+  border-radius: 6px;
+
+  background: #101b14;
+  color: #b9c9bb;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.opcao:hover {
+  border-color: #7ea66f;
+  background: #17261c;
+}
+
+.opcao.ativa {
+  border-color: #9bd77e;
+
+  background: #243c2a;
+  color: #dff3cf;
+
+  box-shadow: inset 0 0 12px rgba(155, 215, 126, 0.08);
+}
+
+.selecao-resumo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-top: 18px;
+  padding: 12px 14px;
+
+  border: 1px dashed #365c43;
+  border-radius: 6px;
+
+  background: rgba(8, 17, 13, 0.45);
+}
+
+.selecao-resumo span {
+  color: #7f9282;
+  font-size: 0.78rem;
+}
+
+.selecao-resumo strong {
+  color: #b6e08d;
+
+  font-family: "Courier New", monospace;
+  font-size: 0.82rem;
+
+  text-transform: uppercase;
+}
+
+.botao-gerar {
+  width: 100%;
+
+  margin-top: 18px;
+  padding: 14px 18px;
+
+  border: 1px solid #9bd77e;
+  border-radius: 6px;
+
+  background: #9bd77e;
+  color: #0a120c;
+
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.botao-gerar:hover {
+  background: #b3eb96;
+  transform: translateY(-1px);
+}
+
+.ticket-senha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 20px;
+  padding: 20px;
+
+  border: 1px solid #6f955f;
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(41, 67, 47, 0.88),
+      rgba(19, 34, 23, 0.96)
+    );
+}
+
+.ticket-label {
+  color: #8eaa8d;
+
+  font-family: "Courier New", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ticket-codigo {
+  margin: 10px 0 8px;
+
+  color: #d6ffb9;
+
+  font-family: "Courier New", monospace;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  letter-spacing: 0.08em;
+}
+
+.ticket-detalhe {
+  color: #9fb4a2;
+  font-size: 0.8rem;
+
+  text-transform: uppercase;
+}
