@@ -135,6 +135,36 @@ function Sistema() {
       }
     }
   }
+
+  async function alterarCapacidade(novaCapacidade: number) {
+    try {
+      setErro("");
+      const resposta = await fetch(
+        "http://localhost:3000/api/configuracao/capacidade",
+        {
+          method:"PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            capacidade: novaCapacidade,
+          }),
+        },
+      );
+      const dados = await resposta.json();
+      if(!resposta.ok){
+        throw new Error (
+          dados.erro || "Não foi possível alterar a capacidade.",
+        );
+      }
+      await carregarStatus();
+    } catch (erro) {
+      if (erro instanceof Error) {
+        setErro (erro.message);
+      }
+    }
+  }
+
   return (
     <main className="app-shell">
       <header className="app-header">
@@ -159,7 +189,9 @@ function Sistema() {
           senhaGerada={senhaGerada}
         />
 
-        <StatusSistema status={status} />
+        <StatusSistema 
+        status={status} 
+          alterarCapacidade={alterarCapacidade}/>
 
         <PainelFilas filas={filas} />
 

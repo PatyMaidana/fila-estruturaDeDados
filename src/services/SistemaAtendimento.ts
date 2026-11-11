@@ -88,4 +88,20 @@ export class SistemaAtendimento {
   consultarCapacidade(): number {
     return this.capacidade;
   }
+
+  alterarCapacidade(novaCapacidade: number): void {
+    if(novaCapacidade <= 0) {
+      throw new Error ("A capacidade deve ser maior que zero.");
+    }
+
+    if (novaCapacidade < this.quantidade){
+      throw new Error (" A capacidade não pode ser menor que a quantidade atual de senhas.",
+      );
+    }
+
+    this.filaPreferencial.alterarCapacidade(novaCapacidade);
+    this.filaNormal.alterarCapacidade(novaCapacidade)
+    this.capacidade = novaCapacidade;
+  }
+
 }

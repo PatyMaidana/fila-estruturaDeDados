@@ -62,6 +62,30 @@ app.get("/api/status", (_req, res) => {
   });
 });
 
+app.patch("/api/configuracao/capacidade", (req, res) => {
+  const { capacidade } = req.body;
+
+  try {
+    sistema.alterarCapacidade(capacidade);
+
+    res.json({
+      quantidade: sistema.consultarQuantidade(),
+      capacidade: sistema.consultarCapacidade(),
+    });
+  } catch (erro) {
+    if (erro instanceof Error) {
+      res.status(400).json({
+        erro: erro.message,
+      });
+      return;
+    }
+
+    res.status(500).json({
+      erro: "Erro interno do servidor.",
+    });
+  }
+});
+
 app.get("/", (_req, res) => {
   res.json({
     mensagem: "Sistema de atendimento funcionando",

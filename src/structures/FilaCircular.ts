@@ -60,4 +60,29 @@ export class FilaCircular<T> {
 
     return resultado;
   }
+
+  alterarCapacidade (novaCapacidade: number):void {
+    if(novaCapacidade < this.quantidade) {
+      throw new Error(
+        "A nova capacidade não pode ser meor que a quantidade atual",
+      );
+    }
+
+    const novosElementos: (T | undefined)[]=
+      new Array(novaCapacidade);
+
+    for (let i = 0; i < this.quantidade; i ++) {
+      const indiceAntigo =
+      (this.inicio + i)% this.capacidade;
+
+      novosElementos [i] =
+        this.elementos[indiceAntigo];
+    }
+
+    this.elementos = novosElementos;
+    this.capacidade = novaCapacidade;
+
+    this.inicio=0;
+    this.fim = this.quantidade% novaCapacidade;
+  }
 }

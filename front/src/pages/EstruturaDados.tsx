@@ -342,8 +342,167 @@ quantidade--;`}
         </div>
       </section>
 
+         <section>
+  <h2>9. Alteração dinâmica da capacidade</h2>
+
+  <p>
+    A capacidade máxima da fila pode ser alterada durante a execução
+    do sistema. Essa alteração é feita pelo frontend, mas quem valida
+    e aplica a regra é o backend.
+  </p>
+
+  <div className="capacidade-dinamica-grid">
+    <div className="capacidade-dinamica-card">
+      <span>Capacidade atual</span>
+      <strong>10</strong>
+    </div>
+
+    <div className="capacidade-dinamica-seta">
+      →
+    </div>
+
+    <div className="capacidade-dinamica-card">
+      <span>Nova capacidade</span>
+      <strong>15</strong>
+    </div>
+  </div>
+
+  <div className="capacidade-regra">
+    <strong>Regra de segurança</strong>
+
+    <p>
+      A nova capacidade nunca pode ser menor que a quantidade atual
+      de senhas armazenadas.
+    </p>
+  </div>
+
+  <div className="capacidade-exemplo">
+    <div>
+      <span>Quantidade atual</span>
+      <strong>7</strong>
+    </div>
+
+    <div className="capacidade-valido">
+      <span>Nova capacidade: 10</span>
+      <strong>✓ permitido</strong>
+    </div>
+
+    <div className="capacidade-invalido">
+      <span>Nova capacidade: 5</span>
+      <strong>✕ bloqueado</strong>
+    </div>
+  </div>
+
+  <pre>
+{`if (novaCapacidade < quantidade) {
+  throw new Error(
+    "A capacidade não pode ser menor que a quantidade atual."
+  );
+}`}
+  </pre>
+
+  <h3>O que acontece com a fila circular?</h3>
+
+  <p>
+    Ao alterar a capacidade, um novo array é criado e os elementos
+    são copiados mantendo a ordem lógica da fila.
+  </p>
+
+<div className="ordem-logica-destaque">
+  <h3>Preservando a ordem lógica</h3>
+
+  <p>
+    Mesmo que os elementos estejam espalhados fisicamente pelo array,
+    a fila é percorrida a partir de <strong>inicio</strong>.
+    Assim, ao criar o novo array, os elementos são copiados na mesma
+    ordem em que seriam atendidos.
+  </p>
+
+  <div className="ordem-logica-comparacao">
+    <div>
+      <span>Array físico antes</span>
+      <strong>N4 | vazio | N2 | N3</strong>
+    </div>
+
+    <div>
+      <span>Ordem lógica</span>
+      <strong>N2 → N3 → N4</strong>
+    </div>
+
+    <div>
+      <span>Novo array</span>
+      <strong>N2 | N3 | N4 | vazio | vazio | vazio</strong>
+    </div>
+  </div>
+
+  <pre>
+{`for (let i = 0; i < this.quantidade; i++) {
+  const indiceAntigo =
+    (this.inicio + i) % this.capacidade;
+
+  novosElementos[i] =
+    this.elementos[indiceAntigo];
+}`}
+  </pre>
+
+  <p>
+    O cálculo com <strong>% capacidade</strong> permite continuar o
+    percurso mesmo quando o índice chega ao fim do array e precisa
+    voltar para a posição zero.
+  </p>
+</div>
+
+  <div className="redimensionamento-demo">
+    <div>
+      <span>Antes</span>
+
+      <div className="redimensionamento-array">
+        <span>N4</span>
+        <span className="vazio">vazio</span>
+        <span>N2</span>
+        <span>N3</span>
+      </div>
+
+      <small>
+        Ordem lógica: N2 → N3 → N4
+      </small>
+    </div>
+
+    <div className="redimensionamento-seta">
+      ↓
+    </div>
+
+    <div>
+      <span>Depois</span>
+
+      <div className="redimensionamento-array maior">
+        <span>N2</span>
+        <span>N3</span>
+        <span>N4</span>
+        <span className="vazio">vazio</span>
+        <span className="vazio">vazio</span>
+        <span className="vazio">vazio</span>
+      </div>
+
+      <small>
+        A ordem lógica foi preservada.
+      </small>
+    </div>
+  </div>
+
+  <div className="fluxo-capacidade">
+    <span>Frontend</span>
+    <span>→</span>
+    <span>PATCH /api/configuracao/capacidade</span>
+    <span>→</span>
+    <span>SistemaAtendimento</span>
+    <span>→</span>
+    <span>FilaCircular</span>
+  </div>
+</section>   
+
       <section>
-        <h2>9. Aplicação no projeto</h2>
+        <h2>10. Aplicação no projeto</h2>
 
         <p>No nosso sistema, a responsabilidade é dividida em duas partes.</p>
 
