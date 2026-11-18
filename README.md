@@ -28,20 +28,27 @@ A capacidade inicial do servidor é **10**, definida em `src/server.ts`. A inter
 | React e React Router | Totem, filas, atendimento, status e página explicativa |
 | Vite | Desenvolvimento e build da interface |
 | `tsx` e `concurrently` | Reinicialização do servidor e execução conjunta no desenvolvimento |
+| Docker e Docker Compose | Padronização e execução isolada do frontend e backend |
 
 ```text
-Interface React (localhost:5173)
-              |
-          HTTP / JSON
-              |
-API Express (localhost:3000)
-              |
-     SistemaAtendimento
-              |
-     +--------+--------+
-     |                 |
-FilaCircular       FilaCircular
-preferencial          normal
+Navegador
+   |
+localhost:5173
+   |
+Container Frontend
+   |
+ HTTP / JSON
+   |
+localhost:3000
+   |
+Container Backend
+   |
+SistemaAtendimento
+   |
++-------+-------+
+|               |
+FilaCircular   FilaCircular
+preferencial     normal
 ```
 
 As filas ficam em memória no servidor. Recarregar o navegador não apaga as senhas. Reiniciar o servidor, inclusive por uma alteração de código no modo watch, descarta o estado. Não há banco de dados.
@@ -74,29 +81,98 @@ A geração completa envolve sorteio e consulta ao `Set`, podendo repetir o sort
 ## Organização dos arquivos
 
 ```text
-src/
-  models/Senha.ts                 # Tipos de categoria, serviço e senha
-  structures/FilaCircular.ts       # Array circular e redimensionamento
-  services/SistemaAtendimento.ts   # Prioridade, códigos, ocupação e alarme
-  server.ts                       # API HTTP e instância compartilhada
-  teste.ts                        # Demonstração manual no terminal
-front/
-  src/
-    components/                   # Totem, PainelFilas, Atendimento, StatusSistema
-    pages/Sistema.tsx             # Integração com a API
-    pages/EstruturaDados.tsx      # Explicação visual da estrutura de dados
-    App.tsx                       # Rotas da interface
-    main.tsx                      # Entrada do React
-  package.json                    # Dependências e comandos da interface
-  vite.config.ts                  # Configuração do Vite
-package.json                      # Dependências e comandos do servidor/projeto
-package-lock.json                 # Versões resolvidas das dependências
-tsconfig.json                     # Compilação de src/ para dist/
-MANUAL.md                         # Material de estudo da implementação inicial
-LICENSE                           # Texto de licença do repositório
+fila-estruturaDeDados/
+├── src/
+│   ├── models/
+│   ├── structures/
+│   ├── services/
+│   └── server.ts
+│
+├── front/
+│   ├── src/
+│   ├── Dockerfile
+│   ├── .dockerignore
+│   └── package.json
+│
+├── docs/
+│   └── images/
+│
+├── Dockerfile
+├── docker-compose.yml
+├── .dockerignore
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
 `dist/` contém o servidor e a lógica compilados. `front/dist/` contém a interface compilada. Dependências e saídas de compilação estão no `.gitignore`.
+
+## Execução com Docker
+
+O projeto pode ser executado de forma containerizada utilizando Docker e Docker Compose. Nesse modo, frontend e backend são executados em containers separados, mantendo o ambiente de desenvolvimento padronizado.
+
+### Pré-requisitos
+
+- Docker Desktop
+- Docker Compose
+
+### Iniciar o sistema
+
+Na raiz do repositório, execute:
+
+```powershell
+docker compose up --build
+```
+
+Na primeira execução, o Docker irá:
+
+1. construir a imagem do backend;
+2. instalar as dependências do servidor;
+3. construir a imagem do frontend;
+4. instalar as dependências da interface;
+5. iniciar os dois containers.
+
+Após a inicialização, acesse:
+
+- Interface: `http://localhost:5173/`
+- Página explicativa: `http://localhost:5173/estrutura-dados`
+- API: `http://localhost:3000/`
+
+### Encerrar o sistema
+
+```powershell
+docker compose down
+```
+
+Depois que as imagens já tiverem sido construídas, o sistema pode ser iniciado novamente com:
+
+```powershell
+docker compose up
+```
+
+Durante o desenvolvimento, os diretórios `src` do frontend e backend são montados como volumes. Dessa forma, alterações realizadas nos arquivos TypeScript, TSX e CSS são detectadas pelos servidores de desenvolvimento sem a necessidade de reconstruir as imagens a cada modificação.
+
+Mudanças em arquivos como `Dockerfile`, `package.json` ou dependências podem exigir uma nova construção:
+
+```powershell
+docker compose up --build
+```
+
+### Serviços
+
+O `docker-compose.yml` mantém dois serviços:
+
+```text
+frontend
+└── React + Vite
+    └── porta 5173
+
+backend
+└── Node.js + Express
+    └── porta 3000
+```
+
+O frontend continua realizando as requisições para `http://localhost:3000`, enquanto o backend permite requisições originadas de `http://localhost:5173`.
 
 ## Instalação e execução local
 
@@ -153,13 +229,48 @@ Após o build da raiz, `npm.cmd start` executa `dist/server.js`. Esse comando in
 ## Uso da interface
 
 1. No totem, selecione categoria e serviço e clique em **Gerar senha**.
-2. Confira o código emitido e as listas de preferenciais e normais.
-3. Clique em **Chamar próxima senha** para retirar a próxima pessoa da fila de espera.
-4. Acompanhe quantidade, capacidade e percentual de ocupação no status.
-5. Use `+` e `-` para alterar o limite, respeitando a quantidade aguardando.
-6. Ao lotar, a interface apresenta um aviso e tenta emitir um alarme sonoro. A reprodução depende do suporte e das permissões de áudio do navegador.
+2. A senha gerada é apresentada no ticket e adicionada à fila correspondente.
+3. Confira as listas de atendimentos preferenciais e normais.
+4. Clique em **Chamar próxima senha** para retirar a próxima pessoa da fila.
+5. A chamada de uma nova senha é destacada visualmente por uma breve animação de interferência.
+6. Acompanhe quantidade, capacidade e percentual de ocupação no painel de status.
+7. Use `+` e `-` para alterar o limite, respeitando a quantidade atualmente aguardando.
+8. Ao atingir a capacidade máxima, o sistema apresenta alertas visuais e tenta emitir um aviso sonoro.
 
 As filas e o status são consultados ao abrir a página e após ações realizadas nela. Não há WebSocket ou consulta periódica; outra janela pode precisar recarregar para mostrar mudanças feitas por um cliente diferente.
+
+## Interface do sistema
+
+A interface foi desenvolvida com uma identidade visual inspirada em terminais e equipamentos eletrônicos antigos, utilizando tons escuros, verde fosforescente, elementos de monitor CRT e indicadores de estado.
+
+### Visão geral
+
+![Visão geral do sistema](docs/images/sistema-completo.png)
+
+A tela principal reúne o totem de geração, visualização das filas, atendimento e informações sobre ocupação do sistema.
+
+### Geração de senha
+
+![Totem de geração de senhas](docs/images/geracao-senha.png)
+
+O usuário seleciona a categoria e o serviço antes de gerar uma senha. O ticket gerado apresenta uma pequena animação de interferência inspirada em monitores CRT, reforçando visualmente a criação de uma nova senha.
+
+### Status do sistema
+
+![Status do sistema](docs/images/status-sistema.png)
+
+O painel de status apresenta quantidade de senhas aguardando, capacidade máxima, percentual de ocupação e alertas.
+
+A interface também utiliza diferentes estados visuais para representar a ocupação da fila. Quando a capacidade máxima é atingida, são exibidos indicadores visuais e um alerta sonoro.
+
+### Estrutura de dados
+
+![Página explicativa da fila circular](docs/images/estrutura-dados1.png)
+
+![Página explicativa da fila circular](docs/images/estrutura-dados2.png)
+
+O projeto possui uma página dedicada à explicação visual da estrutura utilizada, apresentando conceitos como FIFO, índices `inicio` e `fim`, aritmética modular, prioridade e redimensionamento da fila circular.
+
 
 ## API HTTP
 
