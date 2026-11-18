@@ -42,6 +42,7 @@
 }
 
 .senha-atendimento-codigo {
+  position: relative;
   margin: 10px 0;
 
   color: #d6ffb9;
@@ -53,6 +54,32 @@
 
   text-shadow:
     0 0 10px rgba(155, 215, 126, 0.25);
+  animation: codigo-glitch 0.35s steps(4);
+}
+
+@keyframes codigo-glitch {
+  0% {
+    text-shadow:
+      -4px 0 rgba(241, 92, 192, 0.7),
+      4px 0 rgba(57, 253, 237, 0.5);
+  }
+
+  30% {
+    text-shadow:
+      3px 0 rgba(155, 215, 126, 0.6),
+      -3px 0 rgba(255, 157, 59, 0.4);
+  }
+
+  60% {
+    text-shadow:
+      -1px 0 rgba(0, 238, 255, 0.4),
+      1px 0 rgba(255, 157, 59, 0.3);
+  }
+
+  100% {
+    text-shadow:
+      0 0 10px rgba(255, 0, 200, 0.25);
+  }
 }
 
 .senha-atendimento-detalhe {
@@ -105,4 +132,106 @@
   color: #0a120c;
 
   transform: translateY(-1px);
+}
+
+.senha-glitch {
+  position: relative;
+  overflow: hidden;
+
+  animation: glitch-entrada 0.45s ease-out;
+}
+
+@keyframes glitch-entrada {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.04);
+
+    filter:
+      brightness(2.2)
+      contrast(1.6);
+  }
+
+  15% {
+    opacity: 1;
+
+    transform:
+      translateX(-3px)
+      skewX(-4deg)
+      scaleY(1.05);
+  }
+
+  30% {
+    transform:
+      translateX(4px)
+      skewX(3deg);
+  }
+
+  45% {
+    transform:
+      translateX(-2px)
+      skewX(-2deg);
+  }
+
+  65% {
+    transform:
+      translateX(1px)
+      skewX(1deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+
+    filter:
+      brightness(1)
+      contrast(1);
+  }
+}
+
+.senha-glitch::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 2px,
+      rgba(255, 255, 255, 0.05) 3px,
+      rgba(0, 0, 0, 0.12) 4px
+    );
+
+  opacity: 0;
+
+  animation: estatica-crt 0.45s ease-out;
+}
+
+@keyframes estatica-crt {
+  0% {
+    opacity: 0.8;
+    transform: translateY(-4px);
+  }
+
+  20% {
+    opacity: 0.45;
+    transform: translateY(3px);
+  }
+
+  40% {
+    opacity: 0.65;
+    transform: translateY(-2px);
+  }
+
+  70% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
 }
