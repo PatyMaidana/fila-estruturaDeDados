@@ -14,45 +14,39 @@ type Props = {
   chamarProxima: () => void;
 };
 
-function Atendimento({
-  senhaAtendida,
-  chamarProxima,
-}: Props) {
+function Atendimento({ senhaAtendida, chamarProxima }: Props) {
   return (
-<section className="painel painel-atendimento">
-  <div className="atendimento-cabecalho">
-    <span className="atendimento-codigo">SERVICE-DESK</span>
-    <h2>Atendimento</h2>
-  </div>
+    <section className="painel painel-atendimento">
+      <div className="atendimento-cabecalho">
+        <span className="atendimento-codigo">SERVICE-DESK</span>
+        <h2>Atendimento</h2>
+      </div>
 
-  {senhaAtendida ? (
-    <div className="senha-atendimento">
-      <span className="senha-atendimento-label">
-        Senha em atendimento
-      </span>
+      {senhaAtendida ? (
+        <div
+          key={senhaAtendida.codigo}
+          className="senha-atendimento senha-glitch"
+        >
+          <span className="senha-atendimento-label">Senha em atendimento</span>
 
-      <strong className="senha-atendimento-codigo">
-        {senhaAtendida.codigo}
-      </strong>
+          <strong className="senha-atendimento-codigo">
+            {senhaAtendida.codigo}
+          </strong>
 
-      <span className="senha-atendimento-detalhe">
-        {senhaAtendida.categoria} / {senhaAtendida.servico}
-      </span>
-    </div>
-  ) : (
-    <div className="atendimento-vazio">
-      <span>Nenhuma senha chamada.</span>
-    </div>
-  )}
+          <span className="senha-atendimento-detalhe">
+            {senhaAtendida.categoria} / {senhaAtendida.servico}
+          </span>
+        </div>
+      ) : (
+        <div className="atendimento-vazio">
+          <span>Nenhuma senha chamada.</span>
+        </div>
+      )}
 
-  <button
-    type="button"
-    className="botao-atender"
-    onClick={chamarProxima}
-  >
-    Chamar próxima senha
-  </button>
-</section>
+      <button type="button" className="botao-atender" onClick={chamarProxima}>
+        Chamar próxima senha
+      </button>
+    </section>
   );
 }
 

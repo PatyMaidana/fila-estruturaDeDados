@@ -102,7 +102,9 @@ function Totem({
   </button>
 
   {senhaGerada && (
-    <div className="ticket-senha">
+    <div 
+    key = {senhaGerada.codigo}
+    className="ticket-senha ticket-glitch">
       <span className="ticket-label">Senha gerada</span>
 
       <strong className="ticket-codigo">

@@ -185,3 +185,100 @@
 
   text-transform: uppercase;
 }
+
+.ticket-glitch {
+  position: relative;
+  overflow: hidden;
+
+  animation: ticket-glitch 0.45s steps(4);
+}
+
+@keyframes ticket-glitch {
+  0% {
+    opacity: 0;
+    transform:
+      scaleY(0.05)
+      translateX(-4px);
+
+    filter:
+      brightness(2.2)
+      contrast(1.6);
+  }
+
+  20% {
+    opacity: 1;
+    transform:
+      scaleY(1.08)
+      translateX(3px);
+  }
+
+  40% {
+    transform:
+      translateX(-3px)
+      skewX(-2deg);
+  }
+
+  65% {
+    transform:
+      translateX(2px)
+      skewX(1deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+
+    filter:
+      brightness(1)
+      contrast(1);
+  }
+}
+
+.ticket-glitch::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 2px,
+      rgba(255, 255, 255, 0.06) 3px,
+      rgba(0, 0, 0, 0.16) 4px
+    );
+
+  opacity: 0;
+
+  animation: ticket-estatica 0.45s steps(5);
+}
+
+@keyframes ticket-estatica {
+  0% {
+    opacity: 0.85;
+    transform: translateY(-5px);
+  }
+
+  25% {
+    opacity: 0.5;
+    transform: translateY(4px);
+  }
+
+  50% {
+    opacity: 0.35;
+    transform: translateY(-3px);
+  }
+
+  75% {
+    opacity: 0.15;
+    transform: translateY(2px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
